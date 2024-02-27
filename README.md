@@ -4,4 +4,5 @@ Instituto da Computação
 
 Orientador: Márcio Ribeiro
 
-Alunos: Antonio Guilherme da Silva
+Alunos: Antonio Guilherme da Silva, Felipe Lira Da Silva, Kauã Lessa
+
