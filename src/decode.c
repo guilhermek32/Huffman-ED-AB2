@@ -64,7 +64,6 @@ NODE *getTree(FILE *archive, int *treeSize){
     return huffTree;
 }
 
-/* Verifica se o bit na posição i esta setado*/
 bool is_seted(uint8_t byte, int i){
     uint8_t mask = 1; // coloca o bit 1 na posicao i
     mask <<= i; 

@@ -15,6 +15,14 @@ uint8_t get_data(NODE* node){
     uint8_t *data = (uint8_t*)node->data; 
     return *data; 
 }
+int get_frequency(NODE* node) {
+    if(node == NULL){
+        puts("NO NULO");
+        return -1;
+    }
+    int* frequency = (int*)node->frequency; 
+    return *frequency;
+}
 
 void pre_order_trasversal(NODE* root) {
     if (root == NULL) {
@@ -29,9 +37,9 @@ void pre_order_trasversal(NODE* root) {
 
 void huffmanTree(HEAD* myStruct,int *currentSize){
     while(*currentSize > 1){ 
-        int frequency = (myStruct->head)->frequency + (myStruct->head)->next->frequency;// soma das frequências dos primeiros nós
+        int frequency = get_frequency(myStruct->head) + get_frequency(myStruct->head->next);// soma das frequências dos primeiros nós
         NODE* newNode = create_node();
-        newNode->frequency = frequency;
+        *((int*)(newNode->frequency)) = frequency;
 
         newNode->left = myStruct->head;// esquerda do novo nó vai receber o primeiro elemento
         removeFirst(&myStruct->head,currentSize);

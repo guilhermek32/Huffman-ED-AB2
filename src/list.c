@@ -8,9 +8,9 @@ void malloc_error_reporter(void* ptr){
     if(ptr == NULL){
         perror("Erro na alocação de memória");
         exit(EXIT_FAILURE);
-    }
+    } 
 }
-/* Funcao para reportar possivel erro ao abrir arquivos*/
+
 void file_error_reporter(FILE* ptr){
     if(ptr == NULL){
         perror("Erro ao abrir arquivo"); 
@@ -23,16 +23,17 @@ void init_struct(HEAD* Mystruct){
   Mystruct->size = 0; 
 }
 
-/* Cria e retorna um novo no*/
 NODE* create_node(){
     NODE* new_node = malloc(sizeof(NODE));
     malloc_error_reporter(new_node); 
 
     new_node->data = malloc(sizeof(uint8_t)); 
-    malloc_error_reporter(new_node->data); 
+    malloc_error_reporter(new_node->data);
+    new_node->frequency = malloc(sizeof(int)); 
+    malloc_error_reporter(new_node->frequency); 
 
     *(uint8_t*)new_node->data = '*';
-    new_node->frequency = 0; 
+    *(int*)new_node->frequency = 0; 
     new_node->left = NULL; 
     new_node->right = NULL; 
     new_node->next = NULL; 
@@ -40,15 +41,13 @@ NODE* create_node(){
     return new_node; 
 }
 
-/* Funcao auxiliar de insert sorted. Esta funcao ja
- prepara o novo no a ser inserido de maneira ordenada*/
 void insert_in_linked_list(HEAD* Mystruct, unsigned int* frequency_table){
     for(unsigned int i = 0; i<TAM; i++){
         if(frequency_table[i] > 0){
         
-        NODE* new_node = create_node();
+        NODE* new_node = create_node(); // '*'
         *((uint8_t*)(new_node->data)) = i; // Desrreferencia o ponteiro e converte um int para byte
-        new_node->frequency = frequency_table[i];
+        *((int*)(new_node->frequency)) = frequency_table[i];
 
         insert_sorted(Mystruct, new_node);
     }
@@ -60,7 +59,7 @@ void insert_sorted(HEAD* Mystruct, NODE* new_node) {
     NODE* prev = NULL;
 
     // Encontre o local adequado para inserir o novo nó com base na frequência
-    while (current != NULL && current->frequency < new_node->frequency) {
+    while (current != NULL && get_frequency(current) < get_frequency(new_node)) {
         prev = current;
         current = current->next;
     }

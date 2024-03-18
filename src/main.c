@@ -19,7 +19,7 @@ int main(){
         init_struct(&Mystruct);
         unsigned int* frequency_table = init_frequency_table(); 
         char file_name[50];
-        unsigned short int trash_size, tree_size = 0;    
+        unsigned short int trash_size, tree_size = 0;   
 
         printf("Informe o nome do arquivo a ser compactado\n");
         scanf("%s", file_name);
@@ -36,7 +36,7 @@ int main(){
         printf("\nPARTE 2\n");
         insert_in_linked_list(&Mystruct, frequency_table); 
 
-        // Parte 3: Cria a ávore de Huffman e sua string
+        // Parte 3: Cria a ávore de Huffman
         printf("\nPARTE 3\n");
         huffmanTree(&Mystruct, &Mystruct.size);
         puts("Saiu tree"); 
@@ -69,7 +69,7 @@ int main(){
         file_error_reporter(fileIn); 
 
         write_header(compressed_file, tree_and_trash_size, Mystruct.head);
-        
+
         setBytes(fileIn, compressed_file, table);   
 
         puts("FIM"); 

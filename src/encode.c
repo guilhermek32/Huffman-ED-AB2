@@ -13,11 +13,10 @@ unsigned int* init_frequency_table(){
 
 }
 
-/* Contabiliza a frequencia de cada byte do arquivo na tabela de frequencia*/
 void count_frequency(unsigned int* frequency_table, char* file_name){
     FILE* file = fopen(file_name, "rb");
     file_error_reporter(file); 
-    uint8_t byte; 
+    uint8_t byte;
 
     while(fread(&byte, sizeof(uint8_t), 1, file) == 1){ // Mudar vericacao?
         frequency_table[byte]++; 
@@ -27,13 +26,24 @@ void count_frequency(unsigned int* frequency_table, char* file_name){
 }
 
 void set_bit(int j, uint8_t* byte){
-    uint8_t mask = 1; 
+    uint8_t mask = 1; // 00000001
     mask = mask << j;
+    // 10000000
+    // 00000000
+    // 10000000
     *byte = *byte | mask; 
 }
 
 void write_header(FILE* cmp_file, unsigned short int tree_and_trash_size, NODE* root){
-    
+
+
+    // 10100000 00100100
+    // 00000000 10100000 first_byte
+    // 00100100 00000000 <<= 8
+    // >>= 8
+    // 00000000 00100100 second_byte
+
+
     unsigned char first_byte = tree_and_trash_size >> 8;
     tree_and_trash_size <<= 8; 
     tree_and_trash_size >>= 8;
@@ -82,7 +92,7 @@ void buildTable(NODE* tree_node,BitHuff table[],BitHuff code){
         code.bitH++;
         if(tree_node->right != NULL)
         buildTable(tree_node->right, table, code);
-    }        
+    }   
 }
 
 
@@ -94,7 +104,7 @@ unsigned short int getTrashSize(unsigned int frequency[], BitHuff table[]){
             totalBits += frequency[i] * table[i].size;
         }
     }
-    unsigned short int trash = (8 - (totalBits % 8));
+    unsigned short int trash = (8 - (totalBits % 8)); 
     return trash;
 }
 
@@ -111,9 +121,14 @@ void getTreeSize(NODE* tree_root, unsigned short int* treeSize){
 }
 bool isSetedLong(unsigned long long int code, int i) {
     unsigned long long int mask = 1; 
-    mask <<= i; 
+    mask <<= i;
+    // 1000101 tam = 7
+    // mask = 000000000000000001
+    // 1000101
+    // 1000000
     return code & mask; 
 }
+
 void setBytes(FILE *fileIn,FILE *fileOut,BitHuff table[]){
     unsigned char buffer = 0; // Buffer que sera escrito no arquivo quando cheio
     unsigned char original_byte;
@@ -121,6 +136,9 @@ void setBytes(FILE *fileIn,FILE *fileOut,BitHuff table[]){
 
     while(fread(&original_byte, sizeof(unsigned char), 1, fileIn) == 1) { 
         unsigned long long int huffCode = table[original_byte].bitH;
+        // 01011001
+        // char exemplo[255]
+        // 0 254
 
         for(int i = table[original_byte].size; i > 0; i--){
             if(isSetedLong(huffCode, i - 1)){

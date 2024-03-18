@@ -1,46 +1,89 @@
 #ifndef LIST_H
 #define LIST_H
 
-/*  Esta estrutura representa tanto o no da lista encadeada
-    assim como o no da arvore de huffman */
+/**
+ * @brief Estrutura de um nó
+ * 
+ * @details Esta estrutura representa o nó da lista encadeada e árvore
+ * 
+*/
 typedef struct NODE {
-  void *data;
-  unsigned int frequency; 
-  struct NODE* left; 
-  struct NODE* right; 
-  struct NODE* next; 
+  void *data; /**< Ponteiro que armazena o endereço do byte */
+  void* frequency; /**< Ponteiro que armazena a frequencia do byte */
+  struct NODE* left; /**< Filho esquerdo */
+  struct NODE* right; /**< Filho direito */
+  struct NODE* next; /**< Próximo nó da lista encadeada */
 } NODE;
 
-/*  Esta estrutura representa tanto a cabeça da lista encadeada
-    quanto a raiz da árvore*/
+/**
+ * @brief Estrutura da lista encadaeada e árvore
+ * 
+ * @details Esta estrutura representa tanto a cabeça da lista encadeada quanto a raiz da árvoreas
+*/
 typedef struct HEAD{
-  struct NODE* head; 
-  int size; 
+  struct NODE* head; /**< Ponteiro para a cabeça/raiz */
+  int size; /**< Tamanho da estrutura */
 } HEAD; 
 
+/**
+ * @brief Verifica se a alocação dinâmica foi bem sucedida
+ * 
+ * @param ptr: Ponteiro genérico
+ * 
+*/
 void malloc_error_reporter(void* ptr);
 
-/* Funcao para reportar possivel erro ao abrir arquivos*/
-void file_error_reporter(FILE* ptr);
+/**
+ * @brief Funcao para reportar possível erro ao abrir arquivos
+ * 
+ * @param file: Arquivo que será verificado
+*/
+void file_error_reporter(FILE* file);
 
-/* Inicializa a struct retornando NULL. A mesma struct que será
-usada para criar a lista encadeada também será usada para criar a 
-árvore de Huffman*/
-void init_struct(HEAD*);
+/**
+ * @brief Prepara a estrutura para uso
 
-/* Cria novo no para inserir na arvore de Huffman
- Observacao: Nós a serem inseridos na lista encadeada 
- serao preparados pela funcao insert_in_linked_list */
+ * @param head: Estrutura que será preparada
+*/
+void init_struct(HEAD* head);
+
+/**
+ * @brief Cria um nó genérico
+ * 
+ * @details: Inicializa data com '*'. Inicializa frequency com zero
+ * 
+ * @return Retorna o novo nó
+*/
 NODE* create_node(); 
 
-/* Funcao auxiliar de insert sorted. Esta funcao ja
- prepara o novo no a ser inserido de maneira ordenada */
-void insert_in_linked_list(HEAD*, unsigned int*);
+/**
+ * @brief Prepara o nó que será inserido na lista encadeada
+ * 
+ * @details Funcao auxiliar de insert sorted. Esta funcao já
+            prepara o novo no a ser inserido de maneira ordenada
+ * 
+ * @param Mystruct: A estrutura da lista/árvore
+ * @param frequency_table: A tabela de freqência de bytes
+*/
+void insert_in_linked_list(HEAD* Mystruct, unsigned int* frequency_table); 
 
-/* Recebe o no ja preparado para insercao. Insere o no de maneira crescente */
-void insert_sorted(HEAD*, NODE*);
+/**
+ * @brief Insere o nó de maneira crescente
+ *  
+ * 
+ * @param Mystruct: Estrutura da lista/árvore
+ * @param new_node: Nó que será inserido
+*/
+void insert_sorted(HEAD* Mystruct, NODE* new_node); 
 
-/* Remove o no com menor frequencia da lista encadeada */
+/**
+ * @brief Remove logicamente o primeiro nó da lista
+ * 
+ * @param list: Ponteiro para a cabeça da lista
+ * @param currentSize: Ponteiro para o tamanho da estrutura
+ * 
+ * @return byte do nó que foi removido
+*/
 uint8_t removeFirst(NODE **list, int *currentSize);
 
 #endif
