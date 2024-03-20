@@ -14,7 +14,10 @@
 <p align="center"><b>Antonio Guilherme da Silva | Felipe Lira Da Silva | Kauã Lessa</b></p>
 <p align="center"> <b>AB2 2023.2</b></p>
 
-# 
+#
+
+
+## Algoritmo de compactação e descompactação
 A codificação de Huffman é um método de compressão que usa as probabilidades de ocorrência dos símbolos no conjunto de dados a ser comprimido para determinar códigos de tamanho variável para cada símbolo.
 
 - Compilar e executar huffman
@@ -33,10 +36,50 @@ Já na pasta da aplicação em seu terminal, digite o seguinte comando:
 
 Ao inicializar o programa, você terá direito de escolha de 2 opções:
 
--- Compactar um arquivo
+-Compactar um arquivo
 
--- Descompactar o arquivo
+-Descompactar o arquivo
 
 ##  Contagem e plotagem
+### Lista x Árvore Busca Binária
 
-Obrigado pela atenção!
+Contagem realizada em C e plotagem em python utilizando a biblioteca Matplotlib.
+##
+
+**Dependências:**
+
+-Matplotlib
+
+-numpy
+
+-Tkinter
+
+Execute o comando:
+
+`pip install numpy && pip install python3.8-TK && pip install matplotlib`
+
+
+**Compilação e execução:**
+
+mude o diretório para plotagem 
+
+`cd plotagem`
+
+Execute o comando:
+
+`gcc plotagem.c list.c bTree.c -o plot && ./plot`
+
+#
+
+## seminário: Árvore Trie
+
+Arquivo .pptx no git
+
+#
+
+## Testes CUnit
+
+comando: 
+
+`gcc -Wall -Iinc src/list.c src/tree.c src/encode.c src/decode.c tests/test.c -o tests/run -lcunit`
+#
