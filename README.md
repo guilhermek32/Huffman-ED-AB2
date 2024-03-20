@@ -85,5 +85,5 @@ Arquivo .pptx no git
 
 comando: 
 
-`gcc -Wall -Iinc src/list.c src/tree.c src/encode.c src/decode.c tests/test.c -o tests/run -lcunit`
+`gcc -Wall -Iinc src/list.c src/tree.c src/encode.c src/decode.c CUnit/test.c -o CUnit/run -lcunit`
 #
